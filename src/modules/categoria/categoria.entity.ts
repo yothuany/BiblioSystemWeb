@@ -1,13 +1,25 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 
-@Entity('categorias')
+@Entity()
 export class Categoria extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: 'id_categoria' })
-    idCategoria!: number;
 
-    @Column({ type: 'varchar', length: 100 })
-    nome!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: 'text' })
-    descricao!: string;
+  @Column({
+    length: 100 
+  })
+  nome!: string;
+
+  @Column({
+    type: 'text',
+    nullable: true 
+  })
+  descricao!: string;
+
 }

@@ -1,0 +1,146 @@
+<div class="row page-titles mx-0">
+
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>
+                <%= titulo %>
+            </h4>
+            <p class="mb-0">
+                &raquo; Consulte todos os autores do sistema
+            </p>
+        </div>
+    </div>
+
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">
+                    Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">
+                    Autores
+                </a>
+            </li>
+        </ol>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="basic-form flex-grow-1">
+                    <form action="/autores" method="GET">
+                        <div class="form-row">
+
+                            <div class="col-lg-10">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Digite para pesquisar..."
+                                    value="<%= locals.search || '' %>"
+                                >
+                            </div>
+
+                            <div class="col-lg-2 mt-2 mt-lg-0">
+                                <button
+                                    type="submit"
+                                    class="btn btn-warning mb-2"
+                                >
+                                    Pesquisar
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <a
+                    href="/autores/criar"
+                    class="btn btn-primary mb-2ml-3"
+                >
+                    Adicionar Novo Autor
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-responsive-sm">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>Biografia</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% for(
+                                let index = 0;
+                                index < autores.length;
+                                index++
+                            ){ %>
+
+                                <tr>
+
+                                    <td>
+                                        <%= index + 1 %>
+                                    </td>
+
+                                    <td>
+                                        <%= autores[index].nome %>
+                                    </td>
+
+                                    <td>
+                                        <%= autores[index].biografia %>
+                                    </td>
+
+                                    <td class="text-nowrap">
+                                        <div class="d-flex align-items-center">
+                                            <a
+                                                href="/autores/<%= autores[index].id %>/editar"
+                                                class="text-warning mr-3"
+                                            >
+                                                <i class="fa fa-pencil fa-lg"></i>
+                                            </a>
+
+                                            <a
+                                                href="/autores/<%= autores[index].id %>/excluir"
+                                                class="text-danger"
+                                            >
+                                                <i class="fa fa-trash fa-lg"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

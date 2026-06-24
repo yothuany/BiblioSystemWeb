@@ -6,17 +6,19 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('incial') // <-- Removi o "i" para bater com o nome do seu arquivo "incial.ejs"
-  getHello(): object {
-    // Retornamos um objeto vazio para o Express renderizar a página sem quebrar
-    return {};
+  @Render('inicial')
+  getInicial(): object {
+    return {
+      titulo: 'BiblioSystem - Gestão de Biblioteca',
+      horaAgora: new Date().toLocaleString('pt-BR'),
+    };
   }
 
   @Get('sobre')
   @Render('_sobre')
   getSobre(): object {
     return {
-      titulo: 'Seção de informações do sistema web.',
+      titulo: 'Seção de informações do sistema.',
     };
   }
 

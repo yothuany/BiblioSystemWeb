@@ -32,7 +32,7 @@ async function bootstrap() {
 
   await app.listen(port, () =>
     Logger.log(
-      `Application running in http://localhost:${port}`,
+      `BiblioSystem rodando em http://localhost:${port}`,
       'NestExpressApplication',
     ),
   );

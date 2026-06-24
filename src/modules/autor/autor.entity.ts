@@ -1,13 +1,24 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 
-@Entity('autores')
+@Entity()
 export class Autor extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: 'id_autor' })
-    idAutor!: number;
 
-    @Column({ type: 'varchar', length: 100 })
-    nome!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: 'text' })
-    biografia!: string;
+  @Column({
+    length: 150
+  })
+  nome!: string;
+
+  @Column({
+    type: 'text'
+  })
+  biografia!: string;
+
 }
