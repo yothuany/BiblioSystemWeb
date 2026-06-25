@@ -1,25 +1,38 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Membro } from '../membro/membro.entity';
+import { Exemplar } from '../exemplar/exemplar.entity';
 
-@Entity('emprestimos')
+@Entity('emprestimo')
 export class Emprestimo extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: 'id_emprestimo' })
-    idEmprestimo!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ name: 'data_emprestimo', type: 'date' })
-    dataEmprestimo!: Date;
+  @Column({ type: 'date' })
+  data_emprestimo!: string;
 
-    @Column({ name: 'data_prevista_devolucao', type: 'date' })
-    dataPrevistaDevolucao!: Date;
+  @Column({ type: 'date' })
+  data_prevista_devolucao!: string;
 
-    @Column({ name: 'data_devolucao', type: 'date', nullable: true })
-    dataDevolucao!: Date;
+  @Column({ type: 'date', nullable: true })
+  data_devolucao?: string;
 
-    @Column({ name: 'valor_multa', type: 'decimal', precision: 10, scale: 2, nullable: true })
-    valorMulta!: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0.00 })
+  valor_multa!: number;
 
-    @Column({ name: 'Membro_id_membro', type: 'int' })
-    membroIdMembro!: number;
+  @Column({ type: 'varchar', length: 45, default: 'Ativo' })
+  status!: string;
 
-    @Column({ name: 'Exemplar_id_exemplar', type: 'int' })
-    exemplarIdExemplar!: number;
+  @Column()
+  membroId!: number;
+
+  @Column()
+  exemplarId!: number;
+
+  @ManyToOne(() => Membro, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'membroId' })
+  membro!: Membro;
+
+  @ManyToOne(() => Exemplar, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'exemplarId' })
+  exemplar!: Exemplar;
 }

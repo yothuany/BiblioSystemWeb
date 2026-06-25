@@ -1,0 +1,86 @@
+<% const erros = validationErrors(locals.errors); %>
+<% const emp = locals.emprestimo || {} %>
+
+<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4><%= locals.titulo %></h4>
+            <p class="mb-0">&raquo; <%= locals.subtitulo %></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <% if (erros && erros.all && erros.all.length > 0) { %>
+            <div class="alert alert-danger">
+                <h5>Não foi possível salvar o empréstimo</h5>
+                <ul>
+                    <% erros.all.forEach(mensagem => { %>
+                        <li><%= mensagem %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="/emprestimos/<%= emp.id ? emp.id + '/editar' : 'criar' %>" method="POST">
+                    
+                    <% if (emp.id) { %>
+                        <input type="hidden" name="status" value="Devolvido">
+                    <% } %>
+
+                    <div class="form-group mb-3">
+                        <label for="membroCpf" class="form-label">CPF do Membro / Leitor</label>
+                        <input type="text" id="membroCpf" name="membroCpf" 
+                               class="form-control" placeholder="Informe o CPF" required
+                               <%= emp.id ? 'readonly' : '' %>
+                               value="<%= emp.membroCpf || (emp.membro ? emp.membro.cpf : '') %>">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="exemplarCodigo" class="form-label">Código do Exemplar</label>
+                        <input type="text" id="exemplarCodigo" name="exemplarCodigo" 
+                               class="form-control" placeholder="Informe o código do livro" required
+                               <%= emp.id ? 'readonly' : '' %>
+                               value="<%= emp.exemplarCodigo || (emp.exemplar ? emp.exemplar.codigo : '') %>">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="data_emprestimo" class="form-label">Data de Empréstimo</label>
+                        <input type="date" id="data_emprestimo" name="data_emprestimo" class="form-control" required <%= emp.id ? 'readonly' : '' %> value="<%= emp.data_emprestimo || '' %>">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="data_prevista_devolucao" class="form-label">Data Prevista de Devolução</label>
+                        <input type="date" id="data_prevista_devolucao" name="data_prevista_devolucao" class="form-control" required <%= emp.id ? 'readonly' : '' %> value="<%= emp.data_prevista_devolucao || '' %>">
+                    </div>
+
+                    <% if (emp.status === 'Devolvido') { %>
+                        <div class="form-row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Data de Entrega Efetiva</label>
+                                <input type="text" class="form-control" readonly value="<%= emp.data_devolucao %>">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Multa Aplicada por Atraso</label>
+                                <input type="text" class="form-control text-danger font-weight-bold" readonly value="R$ <%= Number(emp.valor_multa || 0).toFixed(2) %>">
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <div class="form-group">
+                        <% if (emp.id) { %>
+                            <button type="submit" class="btn btn-success mr-2">Confirmar Devolução do Livro</button>
+                        <% } else { %>
+                            <button type="submit" class="btn btn-primary mr-2">Salvar Empréstimo</button>
+                        <% } %>
+                        <a href="/emprestimos" class="btn btn-warning">Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

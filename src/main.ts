@@ -6,6 +6,7 @@ import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import expressEjsLayouts from 'express-ejs-layouts';
 import { registerHelpers } from './helpers';
 import { buildValidationErrorPayload } from 'nest-validation-view';
+import { ValidationViewFilter } from 'nest-validation-view';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       transform: true,
+      transformOptions: { enableImplicitConversion: true },
       exceptionFactory: (errors) =>
         new BadRequestException(buildValidationErrorPayload(errors)),
     }),

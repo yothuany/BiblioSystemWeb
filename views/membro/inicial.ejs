@@ -5,7 +5,7 @@
                 <%= titulo %>
             </h4>
             <p class="mb-0">
-                &raquo; Consulte todos os livros do sistema
+                &raquo; Consulte todos os membros cadastrados no sistema
             </p>
         </div>
     </div>
@@ -16,7 +16,7 @@
                 <a href="/">Inicial</a>
             </li>
             <li class="breadcrumb-item active">
-                <a href="javascript:void(0)">Livros</a>
+                <a href="javascript:void(0)">Membros</a>
             </li>
         </ol>
     </div>
@@ -28,11 +28,11 @@
             <div class="card-header">
                 
                 <div class="basic-form flex-grow-1">
-                    <form action="/livros" method="GET">
+                    <form action="/membros" method="GET">
                         <div class="form-row">
                             <div class="col-lg-10">
                                 <input type="text" name="search" class="form-control" 
-                                       placeholder="Buscar por título..." value="<%= termoPesquisado %>">
+                                       placeholder="Buscar por nome ou CPF..." value="<%= termoPesquisado %>">
                             </div>
                             <div class="col-lg-2 mt-2 mt-lg-0">
                                 <button type="submit" class="btn btn-warning mb-2">
@@ -43,8 +43,8 @@
                     </form>
                 </div>
 
-                <a href="/livros/criar" class="btn btn-primary mb-2 ml-3">
-                    Adicionar Novo Livro
+                <a href="/membros/criar" class="btn btn-primary mb-2 ml-3">
+                    Adicionar Novo Membro
                 </a>
 
             </div>
@@ -55,36 +55,28 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Título</th>
-                                <th>ISBN</th>
-                                <th>Editora</th>
-                                <th>Ano</th>
-                                <th>Autor</th>
-                                <th>Categoria</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% if (livros && livros.length > 0) { %>
-                                <% for(let index = 0; index < livros.length; index++) { %>
+                            <% if (membros && membros.length > 0) { %>
+                                <% for(let index = 0; index < membros.length; index++) { %>
                                     <tr>
                                         <td><%= index + 1 %></td>
-                                        <td><%= livros[index].titulo %></td>
-                                        <td><%= livros[index].isbn %></td>
-                                        <td><%= livros[index].editora %></td>
-                                        <td><%= livros[index].anoPublicacao %></td>
-                                        <td>
-                                            <%= livros[index].autores && livros[index].autores.length > 0 ? livros[index].autores[0].nome : 'Não informado' %>
-                                        </td>
-                                        <td>
-                                            <%= livros[index].categorias && livros[index].categorias.length > 0 ? livros[index].categorias[0].nome : 'Não informado' %>
-                                        </td>
+                                        <td><strong><%= membros[index].nome %></strong></td>
+                                        <td><%= membros[index].cpf %></td>
+                                        <td><%= membros[index].email %></td>
+                                        <td><%= membros[index].telefone %></td>
                                         <td class="text-nowrap">
                                             <div class="d-flex align-items-center">
-                                                <a href="/livros/<%= livros[index].id %>/editar" class="text-warning mr-3">
+                                                <a href="/membros/<%= membros[index].id %>/editar" class="text-warning mr-3">
                                                     <i class="fa fa-pencil fa-lg"></i>
                                                 </a>
-                                                <a href="/livros/<%= livros[index].id %>/excluir" class="text-danger">
+                                                <a href="/membros/<%= membros[index].id %>/excluir" class="text-danger">
                                                     <i class="fa fa-trash fa-lg"></i>
                                                 </a>
                                             </div>
@@ -93,7 +85,7 @@
                                 <% } %>
                             <% } else { %>
                                 <tr>
-                                    <td colspan="8" class="text-center">Nenhum livro cadastrado ou encontrado.</td>
+                                    <td colspan="6" class="text-center">Nenhum membro cadastrado ou encontrado.</td>
                                 </tr>
                             <% } %>
                         </tbody>

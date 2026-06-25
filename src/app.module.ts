@@ -9,7 +9,6 @@ import { LivroModule } from './modules/livro/livro.module'; // <-- FALTAVA ESTA 
 import { ExemplarModule } from './modules/exemplar/exemplar.module';
 import { MembroModule } from './modules/membro/membro.module';
 import { EmprestimoModule } from './modules/emprestimo/emprestimo.module';
-import { ReservaModule } from './modules/reserva/reserva.module';
 
 @Module({
   imports: [
@@ -20,7 +19,7 @@ import { ReservaModule } from './modules/reserva/reserva.module';
     LivroModule, 
     MembroModule,
     EmprestimoModule,
-    ReservaModule,
+    ExemplarModule
   ],
   controllers: [AppController],
   providers: [AppService],

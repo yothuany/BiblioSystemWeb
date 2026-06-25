@@ -1,0 +1,63 @@
+<% const emp = locals.emprestimo || {} %>
+
+<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4><%= locals.titulo %></h4>
+            <p class="mb-0">&raquo; <%= locals.subtitulo %></p>
+        </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Inicial</a></li>
+            <li class="breadcrumb-item"><a href="/emprestimos">Consulta de Empréstimos</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Excluir Empréstimo</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="card border-danger">
+            <div class="card-header bg-danger p-3">
+                <h4 class="card-title text-white mb-0">Exclusão de Registro de Empréstimo</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning text-dark">
+                    <b>Atenção!</b> Esta ação removerá permanentemente o histórico deste empréstimo e todas as pendências associadas do banco de dados.
+                </div>
+                <p class="mb-4">Tem certeza que deseja apagar o registro abaixo?</p>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th style="width: 35%;" class="bg-light">Membro / Leitor</th>
+                                <td><%= emp.membro ? emp.membro.nome : 'Não encontrado' %></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">CPF do Membro</th>
+                                <td><%= emp.membro ? emp.membro.cpf : 'N/A' %></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Código do Exemplar</th>
+                                <td><span class="badge badge-dark"><%= emp.exemplar ? emp.exemplar.codigo : 'N/A' %></span></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Data de Retirada</th>
+                                <td><%= emp.data_emprestimo %></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Status da Entrega</th>
+                                <td><strong><%= emp.status %></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form action="/emprestimos/<%= emp.id %>/excluir" method="post">
+                    <button type="submit" class="btn btn-danger mr-2">Confirmar Exclusão</button>
+                    <a href="/emprestimos" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

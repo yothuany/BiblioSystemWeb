@@ -1,0 +1,128 @@
+<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>
+                <%= locals.titulo %>
+            </h4>
+            <% if (locals.termoPesquisado) { %>
+                <p class="mb-0">A filtrar por: "<strong><%= locals.termoPesquisado %></strong>"</p>
+            <% } else { %>
+                <p class="mb-0">Consulte e gerencie as cópias físicas dos livros</p>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">
+                    Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">
+                    Exemplares
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="basic-form flex-grow-1">
+                    <form action="/exemplares" method="GET">
+                        <div class="form-row">
+                            <div class="col-lg-10">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Pesquise pelo código do exemplar..."
+                                    value="<%= locals.termoPesquisado || '' %>"
+                                >
+                            </div>
+                            <div class="col-lg-2 mt-2 mt-lg-0 d-flex gap-2">
+                                <button
+                                    type="submit"
+                                    class="btn btn-warning mb-2 flex-grow-1"
+                                >
+                                    Pesquisar
+                                </button>
+                                <% if (locals.termoPesquisado) { %>
+                                    <a href="/exemplares" class="btn btn-light mb-2 ml-2">Limpar</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <a
+                    href="/exemplares/criar"
+                    class="btn btn-primary mb-2 ml-3 text-nowrap"
+                >
+                    + Novo Exemplar
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Código</th>
+                                <th>Livro Pertencente</th>
+                                <th>Status do Estoque</th>
+                                <th class="text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (locals.exemplares && locals.exemplares.length > 0) { %>
+                                <% locals.exemplares.forEach(ex => { %>
+                                    <tr>
+                                        <td><strong><%= ex.id %></strong></td>
+                                        <td><%= ex.codigo %></td>
+                                        <td><%= ex.livro ? ex.livro.titulo : 'N/A' %></td>
+                                        <td>
+                                            <% if (ex.status === 'Disponível') { %>
+                                                <span class="badge badge-success">Disponível</span>
+                                            <% } else { %>
+                                                <span class="badge badge-warning text-white">Emprestado</span>
+                                            <% } %>
+                                        </td>
+                                        <td class="text-nowrap text-right">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <a
+                                                    href="/exemplares/<%= ex.id %>/editar"
+                                                    class="text-warning mr-3"
+                                                    title="Editar"
+                                                >
+                                                    <i class="fa fa-pencil fa-lg"></i>
+                                                </a>
+
+                                                <a
+                                                    href="/exemplares/<%= ex.id %>/excluir"
+                                                    class="text-danger"
+                                                    title="Excluir"
+                                                >
+                                                    <i class="fa fa-trash fa-lg"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">Nenhum exemplar localizado para a busca informada.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

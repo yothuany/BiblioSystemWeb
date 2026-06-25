@@ -1,0 +1,212 @@
+<% const erros = validationErrors(locals.errors); %>
+<% const livro = locals.livro || {} %>
+
+<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>
+                <%= locals.titulo %>
+            </h4>
+            <p class="mb-0">
+                &raquo; <%= livro.id ? 'Editar livro existente' : 'Adicionar novo livro' %>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">
+                    Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/livros">
+                    Consulta de Livros
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">
+                    <%= livro.id ? 'Editar Livro' : 'Novo Livro' %>
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        
+        <% if (erros.all.length) { %>
+            <div class="alert alert-danger">
+                <h5>
+                    Não foi possível salvar
+                </h5>
+                <ul>
+                    <% erros.all.forEach(mensagem => { %>
+                        <li>
+                            <%= mensagem %>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
+
+        <div class="card">
+            <div class="card-body">
+                <form
+                    action="/livros/<%= livro.id ? livro.id + '/editar' : 'criar' %>"
+                    method="POST"
+                >
+
+                    <div class="form-group mb-3">
+                        <label for="titulo" class="form-label">Título do Livro</label>
+                        <input 
+                            type="text" 
+                            id="titulo" 
+                            name="titulo" 
+                            class="form-control <%= erros.has('titulo') ? 'is-invalid' : '' %>" 
+                            value="<%= livro.titulo || '' %>"
+                            placeholder="Informe o título do livro"
+                        >
+                        <% if (erros.has('titulo')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('titulo').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="editora" class="form-label">Editora</label>
+                        <input 
+                            type="text" 
+                            id="editora" 
+                            name="editora" 
+                            class="form-control <%= erros.has('editora') ? 'is-invalid' : '' %>" 
+                            value="<%= livro.editora || '' %>"
+                            placeholder="Informe a editora"
+                        >
+                        <% if (erros.has('editora')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('editora').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input 
+                            type="text" 
+                            id="isbn" 
+                            name="isbn" 
+                            class="form-control <%= erros.has('isbn') ? 'is-invalid' : '' %>" 
+                            value="<%= livro.isbn || '' %>"
+                            placeholder="Informe o ISBN"
+                        >
+                        <% if (erros.has('isbn')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('isbn').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="anoPublicacao" class="form-label">Ano de Publicação</label>
+                        <input 
+                            type="number" 
+                            id="anoPublicacao" 
+                            name="anoPublicacao" 
+                            class="form-control <%= erros.has('anoPublicacao') ? 'is-invalid' : '' %>" 
+                            value="<%= livro.anoPublicacao || '' %>"
+                            placeholder="Ex: 2026"
+                        >
+                        <% if (erros.has('anoPublicacao')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('anoPublicacao').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="autorId" class="form-label">Autor</label>
+                        <select 
+                            id="autorId" 
+                            name="autorId" 
+                            class="form-control <%= erros.has('autorId') ? 'is-invalid' : '' %>"
+                        >
+                            <option value="" disabled <%= !livro.autorId ? 'selected' : '' %>>-- Selecione um Autor --</option>
+                            <% if (locals.autores && autores.length > 0) { %>
+                                <% autores.forEach(autor => { %>
+                                    <option value="<%= autor.id %>" <%= String(livro.autorId) === String(autor.id) ? 'selected' : '' %>>
+                                        <%= autor.nome %>
+                                    </option>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <% if (erros.has('autorId')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('autorId').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="categoriaId" class="form-label">Categoria</label>
+                        <select 
+                            id="categoriaId" 
+                            name="categoriaId" 
+                            class="form-control <%= erros.has('categoriaId') ? 'is-invalid' : '' %>"
+                        >
+                            <option value="" disabled <%= !livro.categoriaId ? 'selected' : '' %>>-- Selecione uma Categoria --</option>
+                            <% if (locals.categorias && categorias.length > 0) { %>
+                                <% categorias.forEach(categoria => { %>
+                                    <option value="<%= categoria.id %>" <%= String(livro.categoriaId) === String(categoria.id) ? 'selected' : '' %>>
+                                        <%= categoria.nome %>
+                                    </option>
+                                <% }) %>
+                            <% } %>
+                        </select>
+                        <% if (erros.has('categoriaId')) { %>
+                            <div class="invalid-feedback d-block">
+                                <ul>
+                                    <% erros.get('categoriaId').forEach(mensagem => { %>
+                                        <li><%= mensagem %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mr-2">
+                            Salvar Livro
+                        </button>
+                        <a href="/livros" class="btn btn-warning">
+                            Cancelar
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

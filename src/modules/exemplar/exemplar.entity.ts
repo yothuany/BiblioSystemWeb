@@ -1,16 +1,28 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn
+} from 'typeorm';
+import { Livro } from '../livro/livro.entity';
 
-@Entity('exemplares')
+@Entity({ name: 'exemplar' })
 export class Exemplar extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: 'id_exemplar' })
-    idExemplar!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: 'varchar', length: 50 })
-    codigo!: string;
+  @Column({ unique: true, length: 50 })
+  codigo!: string;
 
-    @Column({ type: 'varchar', length: 45 })
-    status!: string;
+  @Column({ length: 45, default: 'Disponível' })
+  status!: string; // 'Disponível' ou 'Emprestado'
 
-    @Column({ name: 'Livro_id_livro', type: 'int' })
-    livroIdLivro!: number;
+  @Column()
+  livroId!: number;
+
+  @ManyToOne(() => Livro, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'livroId' })
+  livro!: Livro;
 }

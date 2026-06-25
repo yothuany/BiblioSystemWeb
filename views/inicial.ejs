@@ -1,59 +1,72 @@
+<div class="row page-titles mx-0">
+    <div class="col-sm-12 p-md-0">
+        <div class="welcome-text">
+            <h4>Painel de Controle</h4>
+            <p class="mb-0">Visão geral do sistema de gestão da biblioteca</p>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-3 col-sm-6">
-        <div class="card">
+        <div class="card bg-success text-white">
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
-                    <div class="stat-text">Livros no Catálogo</div>
-                    <div class="stat-digit"> <i class="fa fa-book"></i> 1.240</div>
+                    <div class="stat-text text-white-50">Livros no Catálogo</div>
+                    <div class="stat-digit text-white"> 
+                        <i class="fa fa-book mr-2"></i><%= locals.totalLivros || '1.240' %>
+                    </div>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success w-85" role="progressbar" aria-valuenow="85"
-                        aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-0 mt-3" style="height: 6px; background: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-lg-3 col-sm-6">
-        <div class="card">
+        <div class="card bg-primary text-white">
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
-                    <div class="stat-text">Empréstimos Ativos</div>
-                    <div class="stat-digit"> <i class="fa fa-retweet"></i> 342</div>
+                    <div class="stat-text text-white-50">Empréstimos Ativos</div>
+                    <div class="stat-digit text-white"> 
+                        <i class="fa fa-retweet mr-2"></i><%= locals.totalAtivos || '342' %>
+                    </div>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-primary w-75" role="progressbar" aria-valuenow="75"
-                        aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-0 mt-3" style="height: 6px; background: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-lg-3 col-sm-6">
-        <div class="card">
+        <div class="card bg-warning text-white">
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
-                    <div class="stat-text">Reservas Pendentes</div>
-                    <div class="stat-digit"> <i class="fa fa-bookmark"></i> 48</div>
+                    <div class="stat-text text-white-50">Arrecadação de Multas</div>
+                    <div class="stat-digit text-white"> 
+                        <i class="fa fa-money mr-2"></i>R$ <%= Number(locals.totalMultas || 148.00).toFixed(2) %>
+                    </div>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-warning w-50" role="progressbar" aria-valuenow="50"
-                        aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-0 mt-3" style="height: 6px; background: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-lg-3 col-sm-6">
-        <div class="card">
+        <div class="card bg-danger text-white">
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
-                    <div class="stat-text">Membros Ativos</div>
-                    <div class="stat-digit"> <i class="fa fa-users"></i> 890</div>
+                    <div class="stat-text text-white-50">Membros Ativos</div>
+                    <div class="stat-digit text-white"> 
+                        <i class="fa fa-users mr-2"></i><%= locals.totalMembros || '890' %>
+                    </div>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-danger w-65" role="progressbar" aria-valuenow="65"
-                        aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress mb-0 mt-3" style="height: 6px; background: rgba(255,255,255,0.2);">
+                    <div class="progress-bar bg-white w-65" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
@@ -61,42 +74,27 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-8 col-lg-8 col-md-8">
+    <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center border-0 pb-0">
                 <h4 class="card-title">Fluxo de Empréstimos e Devoluções</h4>
+                <a href="/emprestimos/criar" class="btn btn-primary btn-sm shadow-sm">
+                    <i class="fa fa-plus mr-1"></i> Novo Empréstimo
+                </a>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-xl-12 col-lg-8">
-                        <div id="morris-bar-chart"></div>
+                    <div class="col-xl-12">
+                        <div id="morris-bar-chart" style="min-height: 280px;"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-xl-4 col-lg-4 col-md-4">
-        <div class="card">
-            <div class="card-body text-center">
-                <div class="m-t-10">
-                    <h4 class="card-title">Satisfação dos Leitores</h4>
-                    <h2 class="mt-3">4.8 / 5.0</h2>
-                </div>
-                <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
-                    <i class="ti-heart-broken pa" style="display:none;"></i> <i class="fa fa-star text-warning" style="font-size: 2rem;"></i>
-                </div>
-                <ul class="widget-line-list m-b-15">
-                    <li class="border-right">96% <br><span class="text-success"><i class="ti-hand-point-up"></i> Bom/Excelente</span></li>
-                    <li>4% <br><span class="text-danger"><i class="ti-hand-point-down"></i> Regular/Ruim</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-6">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Retiradas por Categoria</h4>
@@ -104,57 +102,49 @@
             <div class="card-body">
                 <div class="current-progress">
                     <div class="progress-content py-2">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="progress-text">Ficção</div>
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <span class="progress-text font-weight-bold">Ficção</span>
                             </div>
-                            <div class="col-lg-8">
-                                <div class="current-progressbar">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary w-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
-                                    </div>
+                            <div class="col-8">
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-primary w-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="progress-content py-2">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="progress-text">Tecnologia</div>
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <span class="progress-text font-weight-bold">Tecnologia</span>
                             </div>
-                            <div class="col-lg-8">
-                                <div class="current-progressbar">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
-                                    </div>
+                            <div class="col-8">
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-primary w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="progress-content py-2">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="progress-text">História</div>
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <span class="progress-text font-weight-bold">História</span>
                             </div>
-                            <div class="col-lg-8">
-                                <div class="current-progressbar">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
-                                    </div>
+                            <div class="col-8">
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-primary w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="progress-content py-2">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="progress-text">Biografia</div>
+                        <div class="row align-items-center">
+                            <div class="col-4">
+                                <span class="progress-text font-weight-bold">Biografia</span>
                             </div>
-                            <div class="col-lg-8">
-                                <div class="current-progressbar">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-primary w-30" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
-                                    </div>
+                            <div class="col-8">
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-primary w-30" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +154,7 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-6">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Atividades Recentes</h4>
@@ -174,31 +164,27 @@
                     <ul class="timeline">
                         <li>
                             <div class="timeline-badge primary"></div>
-                            <a class="timeline-panel text-muted" href="#">
+                            <div class="timeline-panel text-muted">
                                 <span>Há 5 minutos</span>
-                                <h6 class="m-t-5">Novo empréstimo registrado para o livro "Clean Code".</h6>
-                            </a>
+                                <h6 class="m-t-5 font-weight-bold text-dark">Novo empréstimo registrado</h6>
+                                <p class="mb-0" style="font-size:0.85rem;">Exemplar alugado para o leitor ativo.</p>
+                            </div>
                         </li>
                         <li>
                             <div class="timeline-badge success"></div>
-                            <a class="timeline-panel text-muted" href="#">
+                            <div class="timeline-panel text-muted">
                                 <span>Há 12 minutos</span>
-                                <h6 class="m-t-5">Devolução processada com sucesso (Exemplar #1042).</h6>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="timeline-badge warning"></div>
-                            <a class="timeline-panel text-muted" href="#">
-                                <span>Há 30 minutes</span>
-                                <h6 class="m-t-5">Nova reserva efetuada via sistema web.</h6>
-                            </a>
+                                <h6 class="m-t-5 font-weight-bold text-dark">Devolução processada</h6>
+                                <p class="mb-0" style="font-size:0.85rem;">Exemplar retornou com sucesso ao acervo físico.</p>
+                            </div>
                         </li>
                         <li>
                             <div class="timeline-badge danger"></div>
-                            <a class="timeline-panel text-muted" href="#">
+                            <div class="timeline-panel text-muted">
                                 <span>Há 1 hora</span>
-                                <h6 class="m-t-5">Alerta automático de atraso enviado por e-mail.</h6>
-                            </a>
+                                <h6 class="m-t-5 font-weight-bold text-dark">Alerta de Atraso Gerado</h6>
+                                <p class="mb-0" style="font-size:0.85rem;">Sistema adicionou multa diária de R$ 2,00 automática.</p>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -206,10 +192,10 @@
         </div>
     </div>
 
-    <div class="col-xl-4 col-xxl-6 col-lg-6 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Tarefas Pendentes da Equipe</h4>
+                <h4 class="card-title">Reflexo de Atividades</h4>
             </div>
             <div class="card-body px-0">
                 <div class="todo-list">
@@ -217,12 +203,12 @@
                         <div class="tdl-content widget-todo mr-4">
                             <ul id="todo_list">
                                 <li><label><input type="checkbox"><i></i><span>Conferir devoluções do dia</span><a href='#' class="ti-trash"></a></label></li>
-                                <li><label><input type="checkbox" checked><i></i><span>Separar livros das novas reservas</span><a href='#' class="ti-trash"></a></label></li>
+                                <li><label><input type="checkbox" checked><i></i><span>Organizar prateleira de Ficção</span><a href='#' class="ti-trash"></a></label></li>
                                 <li><label><input type="checkbox"><i></i><span>Notificar leitores com multas pendentes</span><a href='#' class="ti-trash"></a></label></li>
                                 <li><label><input type="checkbox"><i></i><span>Catalogar novos exemplares recebidos</span><a href='#' class="ti-trash"></a></label></li>
                             </ul>
                         </div>
-                        <div class="px-4">
+                        <div class="px-4 mt-3">
                             <input type="text" class="tdl-new form-control" placeholder="Adicionar tarefa interna e apertar 'Enter'...">
                         </div>
                     </div>
@@ -230,57 +216,85 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="col-sm-12 col-md-12 col-xxl-6 col-xl-4 col-lg-6">
+<div class="row">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Últimos Empréstimos</h4>
+                <h4 class="card-title">Últimas Movimentações</h4>
                 <div class="card-action">
-                    <div class="dropdown custom-dropdown">
-                        <div data-toggle="dropdown">
-                            <i class="ti-more-alt"></i>
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/emprestimos">Ver Todos</a>
-                            <a class="dropdown-item" href="/emprestimos/relatorio">Exportar Relatório</a>
-                        </div>
-                    </div>
+                    <a href="/emprestimos" class="btn btn-sm btn-outline-primary">Ver Todos os Empréstimos</a>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-striped">
                         <thead>
                             <tr>
-                                <th>Leitor</th>
-                                <th>Livro</th>
-                                <th>Data Empréstimo</th>
-                                <th>Data Devolução</th>
+                                <th># ID</th>
+                                <th>Membro / CPF</th>
+                                <th>Cód. Exemplar</th>
+                                <th>Data Retirada</th>
+                                <th>Data Prevista</th>
                                 <th>Status</th>
+                                <th>Multa</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Carlos Silva</td>
-                                <td><span>O Senhor dos Anéis</span></td>
-                                <td><span>02/06/2026</span></td>
-                                <td><span>16/06/2026</span></td>
-                                <td><span class="badge badge-success">No Prazo</span></td>
-                            </tr>
-                            <tr>
-                                <td>Ana Souza</td>
-                                <td><span>Pai Rico, Pai Pobre</span></td>
-                                <td><span>15/05/2026</span></td>
-                                <td><span>29/05/2026</span></td>
-                                <td><span class="badge badge-danger">Atrasado</span></td>
-                            </tr>
-                            <tr>
-                                <td>Marcos Lima</td>
-                                <td><span>Design Patterns</span></td>
-                                <td><span>31/05/2026</span></td>
-                                <td><span>14/06/2026</span></td>
-                                <td><span class="badge badge-warning">Pendente</span></td>
-                            </tr>
+                            <% if (locals.ultimosEmprestimos && locals.ultimosEmprestimos.length > 0) { %>
+                                <% locals.ultimosEmprestimos.forEach(emp => { %>
+                                    <tr>
+                                        <td><strong>#<%= emp.id %></strong></td>
+                                        <td><%= emp.membro ? emp.membro.cpf : 'N/A' %></td>
+                                        <td><span class="badge badge-light"><%= emp.exemplar ? emp.exemplar.codigo : 'N/A' %></span></td>
+                                        <td><%= emp.data_emprestimo %></td>
+                                        <td><%= emp.data_prevista_devolucao %></td>
+                                        <td>
+                                            <% if (emp.status === 'Ativo') { %>
+                                                <span class="badge badge-success">Ativo</span>
+                                            <% } else if (emp.status === 'Atrasado') { %>
+                                                <span class="badge badge-danger">Atrasado</span>
+                                            <% } else { %>
+                                                <span class="badge badge-light">Devolvido</span>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <span class="<%= emp.valor_multa > 0 ? 'text-danger font-weight-bold' : 'text-muted' %>">
+                                                R$ <%= Number(emp.valor_multa || 0).toFixed(2) %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td><strong>#1</strong></td>
+                                    <td>000.111.222-33</td>
+                                    <td><span class="badge badge-light">EX-4012</span></td>
+                                    <td>02/06/2026</td>
+                                    <td>16/06/2026</td>
+                                    <td><span class="badge badge-success">Ativo</span></td>
+                                    <td class="text-muted">R$ 0.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#2</strong></td>
+                                    <td>444.555.666-77</td>
+                                    <td><span class="badge badge-light">EX-1090</span></td>
+                                    <td>15/05/2026</td>
+                                    <td>29/05/2026</td>
+                                    <td><span class="badge badge-danger">Atrasado</span></td>
+                                    <td class="text-danger font-weight-bold">R$ 14.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#3</strong></td>
+                                    <td>888.999.000-11</td>
+                                    <td><span class="badge badge-light">EX-8821</span></td>
+                                    <td>31/05/2026</td>
+                                    <td>14/06/2026</td>
+                                    <td><span class="badge badge-light">Devolvido</span></td>
+                                    <td class="text-muted">R$ 0.00</td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>

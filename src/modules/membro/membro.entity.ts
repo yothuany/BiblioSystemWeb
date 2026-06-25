@@ -1,22 +1,24 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 
-@Entity('membros')
+@Entity()
 export class Membro extends BaseEntity {
-    @PrimaryGeneratedColumn({ name: 'id_membro' })
-    idMembro!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: 'varchar', length: 100 })
-    nome!: string;
+  @Column({ length: 100 })
+  nome!: string;
 
-    @Column({ type: 'varchar', length: 100 })
-    email!: string;
+  @Column({ length: 100, unique: true })
+  email!: string;
 
-    @Column({ type: 'varchar', length: 15 })
-    telefone!: string;
+  @Column({ length: 15 })
+  telefone!: string;
 
-    @Column({ type: 'varchar', length: 45 })
-    cpf!: string;
-
-    @Column({ name: 'data_cadastro', type: 'date' })
-    dataCadastro!: Date;
+  @Column({ length: 14, unique: true })
+  cpf!: string;
 }

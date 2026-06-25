@@ -1,4 +1,4 @@
-<% const livro = locals.livro || {} %>
+<% const exemplar = locals.exemplar || {} %>
 
 <div class="row page-titles mx-0">
     <div class="col-sm-6 p-md-0">
@@ -19,13 +19,13 @@
                 </a>
             </li>
             <li class="breadcrumb-item">
-                <a href="/livros">
-                    Consulta de Livros
+                <a href="/exemplares">
+                    Consulta de Exemplares
                 </a>
             </li>
             <li class="breadcrumb-item active">
                 <a href="javascript:void(0)">
-                    Excluir Livro
+                    Excluir Exemplar
                 </a>
             </li>
         </ol>
@@ -37,7 +37,7 @@
         <div class="card border-danger">
             <div class="card-header bg-danger p-3">
                 <h4 class="card-title text-white mb-0">
-                    Exclusão de livro
+                    Exclusão de exemplar
                 </h4>
             </div>
             <div class="card-body">
@@ -47,42 +47,42 @@
                     </b>
                 </div>
                 <p class="mb-4">
-                    Tem certeza que deseja excluir o livro abaixo?
+                    Tem certeza que deseja excluir o exemplar abaixo?
                 </p>
                 
                 <div class="table-responsive mb-4">
                     <table class="table table-bordered mb-0">
                         <tbody>
                             <tr>
-                                <th style="width: 30%;">Título</th>
-                                <td><%= livro.titulo %></td>
+                                <th>
+                                    Código do Exemplar
+                                </th>
+                                <td>
+                                    <%= exemplar.codigo %>
+                                </td>
                             </tr>
                             <tr>
-                                <th>Editora</th>
-                                <td><%= livro.editora %></td>
+                                <th>
+                                    Status
+                                </th>
+                                <td>
+                                    <%= exemplar.status %>
+                                </td>
                             </tr>
                             <tr>
-                                <th>ISBN</th>
-                                <td><%= livro.isbn %></td>
-                            </tr>
-                            <tr>
-                                <th>Ano de Publicação</th>
-                                <td><%= livro.anoPublicacao %></td>
-                            </tr>
-                            <tr>
-                                <th>Autor</th>
-                                <td><%= locals.autor ? autor.nome : 'Não informado' %></td>
-                            </tr>
-                            <tr>
-                                <th>Categoria</th>
-                                <td><%= locals.categoria ? categoria.nome : 'Não informado' %></td>
+                                <th>
+                                    Livro Vinculado
+                                </th>
+                                <td>
+                                    <%= locals.livro ? livro.titulo : (exemplar.livroId || 'Não informado') %>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <form
-                    action="/livros/<%= livro.id %>/excluir"
+                    action="/exemplares/<%= exemplar.id %>/excluir"
                     method="POST"
                 >
                     <button
@@ -92,7 +92,7 @@
                         Confirmar Exclusão
                     </button>
                     <a
-                        href="/livros"
+                        href="/exemplares"
                         class="btn btn-secondary"
                     >
                         Cancelar

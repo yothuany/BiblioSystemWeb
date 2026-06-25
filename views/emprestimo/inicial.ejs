@@ -1,0 +1,145 @@
+<div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+        <div class="welcome-text">
+            <h4>
+                <%= locals.titulo %>
+            </h4>
+            <p class="mb-0">
+                &raquo; <%= locals.subtitulo || 'Consulte todos os empréstimos do sistema' %>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">
+                    Inicial
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="javascript:void(0)">
+                    Empréstimos
+                </a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="basic-form flex-grow-1">
+                    <form action="/emprestimos" method="GET">
+                        <div class="form-row">
+                            <div class="col-lg-10">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Pesquise por CPF do membro ou código do exemplar..."
+                                    value="<%= locals.search || '' %>"
+                                >
+                            </div>
+                            <div class="col-lg-2 mt-2 mt-lg-0">
+                                <button
+                                    type="submit"
+                                    class="btn btn-warning mb-2 w-100"
+                                >
+                                    Pesquisar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <a
+                    href="/emprestimos/criar"
+                    class="btn btn-primary mb-2 ml-3 text-nowrap"
+                >
+                    + Novo Empréstimo
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-responsive-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th># ID</th>
+                                <th>Membro (CPF)</th>
+                                <th>Exemplar (Código)</th>
+                                <th>Data Empréstimo</th>
+                                <th>Data Prevista</th>
+                                <th>Status</th>
+                                <th>Data Devolução</th>
+                                <th>Multa</th>
+                                <th class="text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (locals.emprestimos && locals.emprestimos.length > 0) { %>
+                                <% locals.emprestimos.forEach(emp => { %>
+                                    <tr>
+                                        <td><strong><%= emp.id %></strong></td>
+                                        <td><%= emp.membro ? emp.membro.cpf : 'N/A' %></td>
+                                        <td><%= emp.exemplar ? emp.exemplar.codigo : 'N/A' %></td>
+                                        <td><%= emp.data_emprestimo %></td>
+                                        <td><%= emp.data_prevista_devolucao %></td>
+                                        <td>
+                                            <% if (emp.status === 'Ativo') { %>
+                                                <span class="badge badge-success">Ativo</span>
+                                            <% } else if (emp.status === 'Atrasado') { %>
+                                                <span class="badge badge-danger">Atrasado</span>
+                                            <% } else { %>
+                                                <span class="badge badge-light">Devolvido</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%= emp.data_devolucao ? emp.data_devolucao : '-' %></td>
+                                        <td>
+                                            <span class="<%= emp.valor_multa > 0 ? 'text-danger font-weight-bold' : '' %>">
+                                                R$ <%= Number(emp.valor_multa || 0).toFixed(2) %>
+                                            </span>
+                                        </td>
+                                        <td class="text-nowrap text-right">
+                                            <div class="d-flex align-items-center justify-content-end">
+                                                <% if (emp.status !== 'Devolvido') { %>
+                                                    <a 
+                                                        href="/emprestimos/<%= emp.id %>/editar" 
+                                                        class="btn btn-sm btn-info mr-3"
+                                                    >
+                                                        Devolver
+                                                    </a>
+                                                <% } else { %>
+                                                    <button 
+                                                        class="btn btn-sm btn-secondary mr-3" 
+                                                        disabled
+                                                    >
+                                                        Devolvido
+                                                    </button>
+                                                <% } %>
+
+                                                <a 
+                                                    href="/emprestimos/<%= emp.id %>/excluir" 
+                                                    class="text-danger" 
+                                                    title="Excluir"
+                                                >
+                                                    <i class="fa fa-trash fa-lg"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="9" class="text-center py-4">Nenhum empréstimo registrado no sistema.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
